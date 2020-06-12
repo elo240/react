@@ -1,0 +1,14 @@
+.container-fluid {
+	margin-bottom: 50px;
+}
+.carousel-item img {
+	height: 700px;
+	width: 200px;
+}
+.row .card img {
+	height: 300px;
+	width: 270;
+}
+html {
+	scroll-behavior: smooth;
+}
