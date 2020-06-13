@@ -32,7 +32,7 @@ class Cards extends React.Component {
 				}
 			})
 			.map((item) => {
-				return <Card key={item.id} item={item} />;
+				return <Card key={item.id} imgUrl={item.imgUrl} title={item.title} date={item.date} />;
 			});
 		return (
 			<div>

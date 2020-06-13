@@ -54,13 +54,31 @@ class LoginDialog extends React.Component {
 			buttonDisabled: false,
 		});
 	}
+	async doLogout() {
+		try {
+			let res = await fetch("/logout", {
+				method: "post",
+				headers: {
+					"Accept": "application/json",
+					"Content-Type": "application/json",
+				},
+			});
+			let result = await res.json();
+			if (result && result.success) {
+				UserStore.isLoggedIn = false;
+				UserStore.username = "";
+			}
+		} catch (e) {
+			console.log(e);
+		}
+	}
 	async doLogin() {
 		this.setState({ buttonDisabled: true });
 		try {
 			let res = await fetch("/login", {
 				method: "post",
 				headers: {
-					Accept: "application/json",
+					"Accept": "application/json",
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
@@ -68,19 +86,23 @@ class LoginDialog extends React.Component {
 					password: this.state.password,
 				}),
 			});
-			let result = await result.json();
+			let result = await res.json();
 			if (result && result.success) {
 				UserStore.isLoggedIn = true;
 				UserStore.username = result.username;
-			} else if (result && result.success === false) {
 				this.resetForm();
+			} else if (result && result.success === false) {
 				alert(result.msg);
+				this.resetForm();
 			}
+			
 		} catch (e) {
 			console.log(e);
 		}
+		this.setState({buttonDisabled:false});
 	}
 	render() {
+		if(UserStore.isLoggedIn===false){
 		return (
 			<div>
 				<Button
@@ -139,7 +161,19 @@ class LoginDialog extends React.Component {
 				</Dialog>
 			</div>
 		);
-	}
+		}else{
+			return(<Button
+				variant="outlined"
+				color="primary"
+				disabled={false}
+				onClick={this.doLogout}
+			>
+				Logout
+			</Button>
+			);
+			
+		}
+}
 }
 
 export default LoginDialog;

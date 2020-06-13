@@ -20,6 +20,7 @@ class LoginDialog extends React.Component {
 			email: "",
 			password1: "",
 			password2: "",
+			buttonDisabled:true
 		};
 		this.handleClickOpen = this.handleClickOpen.bind(this);
 		this.handleClose = this.handleClose.bind(this);
@@ -38,20 +39,30 @@ class LoginDialog extends React.Component {
 		const value = target.value;
 		const name = target.name;
 		this.setState({ [name]: value });
+		if(this.state.username === "" ||
+		this.state.password1 === "" ||
+		this.state.password2 === "" ||
+		this.state.email === ""){
+			this.setState({buttonDisabled:true});
+		}else{
+			this.setState({buttonDisabled:false});
+		}
 	};
 	handleSubmit = (event) => {
+		event.preventDefault();
 		if (
 			this.state.username.trim() !== "" &&
 			this.state.password1.trim() !== "" &&
 			emailRegex.test(this.state.email) &&
-			this.match !== ""
+			this.match === ""
 		) {
+			this.setState({ buttonDisabled: true });
 			this.handleClose();
 			this.doRegister();
 		} else if (
-			this.state.username === "" &&
-			this.state.password1 === "" &&
-			this.state.password2 === "" &&
+			this.state.username === "" ||
+			this.state.password1 === "" ||
+			this.state.password2 === "" ||
 			this.state.email === ""
 		) {
 			alert(`Please fill the fields`);
@@ -60,15 +71,13 @@ class LoginDialog extends React.Component {
 		} else {
 			alert("Please input correct email adress");
 		}
-		event.preventDefault();
 	};
 	async doRegister() {
-		this.setState({ buttonDisabled: true });
 		try {
 			let res = await fetch("/register", {
 				method: "post",
 				headers: {
-					Accept: "application/json",
+					"Accept": "application/json",
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
@@ -77,22 +86,22 @@ class LoginDialog extends React.Component {
 					password: this.state.password1,
 				}),
 			});
-			let result = await result.json();
+			let result = await res.json();
 			if (result && result.success) {
 				UserStore.isLoggedIn = true;
 				UserStore.username = result.username;
 			} else if (result && result.success === false) {
-				this.resetForm();
 				alert(result.msg);
 			}
 		} catch (e) {
 			console.log(e);
 		}
+		this.setState({ buttonDisabled: false });
 	}
 	render() {
 		if (this.state.password1 !== this.state.password2) {
 			this.match = "Passwords don't match";
-		} else {
+		}else{
 			this.match = "";
 		}
 		return (
@@ -162,7 +171,7 @@ class LoginDialog extends React.Component {
 						<Button onClick={this.handleClose} color="primary">
 							Cancel
 						</Button>
-						<Button onClick={this.handleSubmit} color="primary">
+						<Button onClick={this.handleSubmit} color="primary" disabled={this.state.buttonDisabled}>
 							Register
 						</Button>
 					</DialogActions>

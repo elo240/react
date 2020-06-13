@@ -1,6 +1,7 @@
 import React from "react";
 import ".././css/header.css";
-import LoginOut from "./LoginOut";
+import LoginDialog from "./LoginDialog";
+import {Link} from "react-router-dom";
 class MyHeader extends React.Component {
 	render() {
 		return (
@@ -8,9 +9,9 @@ class MyHeader extends React.Component {
 				id="header"
 				className="navbar navbar-expand-lg navbar-light bg-light"
 			>
-				<a className="navbar-brand" href="index.html">
+				<Link className="navbar-brand" to="/">
 					MyWebsite
-				</a>
+				</Link>
 				<button
 					className="navbar-toggler"
 					type="button"
@@ -29,24 +30,24 @@ class MyHeader extends React.Component {
 				>
 					<ul className="navbar-nav mr-auto ml-auto">
 						<li className="nav-item active">
-							<a className="nav-link" href="index.html">
-								Home <span className="sr-only">(current)</span>
-							</a>
+							<Link className="nav-link" to="/">
+								Home
+							</Link>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" href="#cards">
-								Cards
-							</a>
+							<Link className="nav-link" to="/forum">
+								Forum
+							</Link>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" href="#more">
-								Register
-							</a>
+							<Link className="nav-link" to="/list">
+								List
+							</Link>
 						</li>
 					</ul>
 					<ul className="navbar-nav nav navbar-right">
 						<li className="nav-item navbar-right">
-							<LoginOut />
+							<LoginDialog />
 						</li>
 					</ul>
 				</div>

@@ -1,17 +1,23 @@
 import React from "react";
-import MyHeader from "./components/MyHeader";
+
 import { observer } from "mobx-react";
-import MainContainer from "./components/MainContainer";
+import MyHeader from "./components/MyHeader";
 import MyFooter from "./components/MyFooter";
+import Home from "./Home";
+import Forum from "./Forum";
+import List from "./List";
+import {ProtectedRoute} from "./components/ProtectedRoute"
 import "./css/style.css";
 import UserStore from "./stores/UserStore";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 class Start extends React.Component {
 	async componentDidMount() {
 		try {
 			let res = await fetch("/isLoggedIn", {
 				method: "post",
 				headers: {
-					Accept: "application/json",
+					"Accept": "application/json",
 					"Content-Type": "application/json",
 				},
 			});
@@ -19,7 +25,7 @@ class Start extends React.Component {
 			if (result && result.success) {
 				UserStore.loading = false;
 				UserStore.isLoggedIn = true;
-				UserStore.unsername = result.username;
+				UserStore.username = result.username;
 			} else {
 				UserStore.loading = false;
 				UserStore.isLoggedIn = false;
@@ -29,34 +35,27 @@ class Start extends React.Component {
 			UserStore.isLoggedIn = false;
 		}
 	}
-	async doLogout() {
-		try {
-			let res = await fetch("/logout", {
-				method: "post",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-			});
-			let result = await res.json();
-			if (result && result.success) {
-				UserStore.isLoggedIn = false;
-				UserStore.unsername = "";
-			}
-		} catch (e) {
-			console.log(e);
-		}
-	}
+	async componentDidUpdate() {}
 	render() {
+		if (UserStore.isLoggedIn);
+		if (UserStore.username);
 		if (UserStore.loading) {
 			return <div className="container-fluid">Loading, please wait</div>;
 		} else {
 			return (
-				<div className="container-fluid">
-					<MyHeader />
-					<MainContainer />
-					<MyFooter />
-				</div>
+				<Router>
+					<div className="container-fluid">
+						<MyHeader />
+						<Switch>
+							<Route path="/" exact component={Home}/>
+							<Route path="/forum" component={Forum}/>
+							{/* <ProtectedRoute path="/forum" component={Forum}/> */}
+							{/* <ProtectedRoute path="/list" component={List}/> */}
+							<Route path="/list" component={List}/>
+						</Switch>
+						<MyFooter />
+					</div>
+				</Router>
 			);
 		}
 	}
