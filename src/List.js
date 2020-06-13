@@ -30,11 +30,15 @@ class List extends React.Component{
 
 
     render(){
-        return(
-            <div id="cards" className="row">
-                {this.state.cards}
-                <button className="btn btn-primary text-center pagination-centered col-12" onClick={this.fetchItems}>More</button>
-            </div>);
+        if(this.state.cards===null){
+            return(<div>Please wait...<br/>Fetching Images...</div>);
+        }else{
+            return(
+                <div id="cards" className="row">
+                    {this.state.cards}
+                    <button className="btn btn-primary text-center pagination-centered col-12" onClick={this.fetchItems}>More</button>
+                </div>);
         }
+    }
 }
 export default List;

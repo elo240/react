@@ -65,8 +65,9 @@ class LoginDialog extends React.Component {
 			});
 			let result = await res.json();
 			if (result && result.success) {
-				UserStore.isLoggedIn = false;
-				UserStore.username = "";
+				UserStore.isLoggedIn= false;
+				UserStore.username= "";
+				UserStore.userID=-1;
 			}
 		} catch (e) {
 			console.log(e);
@@ -90,6 +91,7 @@ class LoginDialog extends React.Component {
 			if (result && result.success) {
 				UserStore.isLoggedIn = true;
 				UserStore.username = result.username;
+				UserStore.userID=result.id;
 				this.resetForm();
 			} else if (result && result.success === false) {
 				alert(result.msg);

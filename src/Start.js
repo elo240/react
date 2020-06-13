@@ -26,16 +26,18 @@ class Start extends React.Component {
 				UserStore.loading = false;
 				UserStore.isLoggedIn = true;
 				UserStore.username = result.username;
+				UserStore.userID=result.userID;
 			} else {
 				UserStore.loading = false;
 				UserStore.isLoggedIn = false;
+				UserStore.username =""
+				UserStore.userID=-1;
 			}
 		} catch (e) {
 			UserStore.loading = false;
 			UserStore.isLoggedIn = false;
 		}
 	}
-	async componentDidUpdate() {}
 	render() {
 		if (UserStore.isLoggedIn);
 		if (UserStore.username);
@@ -48,10 +50,10 @@ class Start extends React.Component {
 						<MyHeader />
 						<Switch>
 							<Route path="/" exact component={Home}/>
-							<Route path="/forum" component={Forum}/>
-							{/* <ProtectedRoute path="/forum" component={Forum}/> */}
-							{/* <ProtectedRoute path="/list" component={List}/> */}
-							<Route path="/list" component={List}/>
+							{/* <Route path="/forum" component={Forum}/> */}
+							<ProtectedRoute path="/forum" component={Forum}/>
+							<ProtectedRoute path="/list" component={List}/>
+							{/* <Route path="/list" component={List}/>  */}
 						</Switch>
 						<MyFooter />
 					</div>
