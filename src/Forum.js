@@ -53,7 +53,6 @@ class Forum extends React.Component{
     async doRemove(str){
         try{
             let postdata=str.split(".");
-            console.log(postdata);
             let res = await fetch("/forum/remove", {
 				method: "post",
 				headers: {
@@ -61,8 +60,8 @@ class Forum extends React.Component{
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					postid:postdata[1],
-					ownerid:postdata[0]
+					postid:postdata[0],
+					ownerid:postdata[1]
 				}),
             });
             let result= await res.json();
@@ -94,7 +93,7 @@ class Forum extends React.Component{
                             <td>{post.username}</td>
                             <td>{post.body}</td>
                             <td>
-                                <Button onClick={()=>this.doRemove(`${post.username}.${post.id}`)} >Delete</Button>
+                                <Button onClick={()=>this.doRemove(`${post.id}.${post.user_id}`)} >Delete</Button>
                             </td>
                             </tr>);
                     }else{

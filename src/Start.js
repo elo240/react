@@ -52,8 +52,8 @@ class Start extends React.Component {
 							<Route path="/" exact component={Home}/>
 							{/* <Route path="/forum" component={Forum}/> */}
 							<ProtectedRoute path="/forum" component={Forum}/>
-							<ProtectedRoute path="/list" component={List}/>
-							{/* <Route path="/list" component={List}/>  */}
+							{/* <ProtectedRoute path="/list" component={List}/> */}
+							<Route path="/list" component={List}/> 
 						</Switch>
 						<MyFooter />
 					</div>
