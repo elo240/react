@@ -39,10 +39,8 @@ class Forum extends React.Component{
                 })
             });
             let result=await res.json();
-            console.log(result);
             if(result && result.success){
-                alert("Post added correctly");
-                this.forceUpdate();
+                this.updateForum();
             }else{
                 alert("Error, please try again later");
             }
@@ -66,7 +64,7 @@ class Forum extends React.Component{
             });
             let result= await res.json();
             if(result && result.success){
-                alert("Post delted");
+                this.updateForum();
             }else{
                 alert("Error, please try again later");
             }
@@ -75,7 +73,7 @@ class Forum extends React.Component{
         }
 
     }
-    async componentDidMount(){
+    async updateForum(){
         try{
             let res=await fetch("/forum/load",{
                 method: "post",
@@ -105,13 +103,17 @@ class Forum extends React.Component{
                             </tr>);
                     }
                 })
-                this.setState({posts:dbposts});
+                this.setState({posts:dbposts,newpost:""});
             }else{
                 alert("Couldnt connect please try again later");
             }
         }catch(e){
             console.log(e);
         }
+    }
+    async componentDidMount(){
+        this.updateForum();
+        
     }
     render(){
         return(
