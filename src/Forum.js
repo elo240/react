@@ -106,7 +106,6 @@ class Forum extends React.Component{
                     }
                 })
                 this.setState({posts:dbposts});
-
             }else{
                 alert("Couldnt connect please try again later");
             }
