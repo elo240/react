@@ -6,7 +6,7 @@ class MyFooter extends React.Component {
 	render() {
 		return (
 			<footer className="footer row fixed-bottom">
-				<div className="col-sm text-center">Copyright © PWSZ ELblag 18885</div>
+				<div className="col-sm text-center">Copyright © PWSZ Elblag 18885</div>
 				<div className="col-sm text-right">
 					<button
 						className="btn btn-primary"
