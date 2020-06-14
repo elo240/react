@@ -1,14 +1,14 @@
 import React from "react";
 import LogOrRegister from "./components/LogOrRegister";
-import Craousel from "./components/Carousel";
+import Carousel from "./components/Carousel";
 import Cards from "./components/Cards";
 class MainContainer extends React.Component {
 	render() {
 		return (
 			<main className="container">
-				<div className="row">
+				<div id="carousel" className="row">
 					<div className="col-12">
-						<Craousel />
+						<Carousel />
 					</div>
 				</div>
 				<div className="row">
