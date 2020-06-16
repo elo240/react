@@ -90,6 +90,7 @@ class LoginDialog extends React.Component {
 			if (result && result.success) {
 				UserStore.isLoggedIn = true;
 				UserStore.username = result.username;
+				UserStore.userID=result.userID;
 			} else if (result && result.success === false) {
 				alert(result.msg);
 			}
